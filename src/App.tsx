@@ -31,7 +31,6 @@ export default function App() {
 
   const { data, isLoading, error } = useQuery<CartItemType>('products', getProducts);
   console.log(data);
-  let products: CartItemType | null = data ? data : null;
 
   const getTotalItems = (items: CartItemType[]) => 
     items.reduce((ack: number, item) => ack + item.amount, 0)
@@ -93,7 +92,7 @@ export default function App() {
         </div>
       </Header>
       <Grid container spacing={3}>
-        {products?.map((item: CartItemType) => (
+        {Array.isArray(data) && data.length && data.map(item => (
               <Grid item key={item.id} xs={12} sm={4}>
                 <Item item={item} 
                 handleAddToCart={handleAddToCart} />
